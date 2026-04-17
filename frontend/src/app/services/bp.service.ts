@@ -10,8 +10,11 @@ import { BusinessPartner, ApiResponse } from '../models/business-partner.model';
 @Injectable({ providedIn: 'root' })
 export class BpService {
 
-  // Change this if your backend runs on a different port
-  private readonly baseUrl = 'http://localhost:3000/api/bp';
+  // local base url
+  // private readonly baseUrl = 'http://localhost:3000/api/bp';
+
+  // --------- server base url ----------
+  private readonly baseUrl = 'https://bp-backend-9oj2.onrender.com/api/bp'; 
 
   constructor(private http: HttpClient) {}
 
