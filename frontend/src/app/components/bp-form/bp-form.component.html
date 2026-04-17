@@ -1,0 +1,225 @@
+<!-- src/app/components/bp-form/bp-form.component.html -->
+<div class="page-wrapper">
+
+  <!-- ── Header ──────────────────────────────────────────── -->
+  <header class="page-header">
+    <div class="header-left">
+      <div class="breadcrumb">
+        <a routerLink="/dashboard">Product &amp; Service</a> › BP Creation
+      </div>
+      <h1 class="page-title">BP Creation</h1>
+      <p class="page-subtitle">Centralize and manage your business partners including vendors and customers with ease</p>
+    </div>
+  </header>
+
+  <!-- ── Loading overlay ─────────────────────────────────── -->
+  <div class="loading-bar" *ngIf="loading">
+    <div class="loading-track"></div>
+  </div>
+
+  <!-- ── Alerts ──────────────────────────────────────────── -->
+  <div class="alert alert-success" *ngIf="success">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+    {{ success }} — Redirecting to dashboard...
+  </div>
+  <div class="alert alert-error" *ngIf="error">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    {{ error }}
+  </div>
+
+  <!-- ── Main layout ──────────────────────────────────────── -->
+  <div class="form-layout" *ngIf="!loading">
+    <!-- Sidebar info -->
+    <aside class="sidebar">
+      <div class="sidebar-icon">🤝</div>
+      <h3>Business Partner</h3>
+      <p>Provide key business partner details, contact information and transaction history for effective relationship management.</p>
+      <div class="sidebar-tip">
+        <strong>Tip:</strong> Add complete partner details so transactions are minimal or safeguarded.
+      </div>
+    </aside>
+
+    <!-- Form panel -->
+    <div class="form-panel">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+
+        <section class="form-section">
+          <h4 class="section-title">Business Partner</h4>
+          <div class="form-grid">
+
+            <!-- BP Code (read-only in edit) -->
+            <div class="form-group">
+              <label>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="15" x2="12" y2="15"/></svg>
+                BP Code
+              </label>
+              <input type="text" placeholder="Auto-generated" disabled class="form-control disabled" />
+            </div>
+
+            <!-- BP Name -->
+            <div class="form-group">
+              <label>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                BP Name <span class="req">*</span>
+              </label>
+              <input
+                type="text"
+                formControlName="bp_name"
+                placeholder="Enter Business Partner Name"
+                [class.error]="isInvalid('bp_name')"
+                class="form-control"
+              />
+              <div class="error-msg" *ngIf="isInvalid('bp_name')">{{ getError('bp_name') }}</div>
+            </div>
+
+            <!-- Customer Group -->
+            <div class="form-group">
+              <label>Customer Group</label>
+              <select formControlName="customer_group" class="form-control">
+                <option value="">Select State</option>
+                <option value="Vendor">Vendor</option>
+                <option value="Customer">Customer</option>
+                <option value="Partner">Partner</option>
+              </select>
+            </div>
+
+            <!-- Contact Person -->
+            <div class="form-group">
+              <label>Contact Person</label>
+              <input type="text" formControlName="contact_person" placeholder="Enter Contact Person" class="form-control" />
+            </div>
+
+            <!-- Phone -->
+            <div class="form-group">
+              <label>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 3.08 4.18 2 2 0 0 1 5.09 2h3a2 2 0 0 1 2 1.72c.128.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L9.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.572 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                Phone Number <span class="req">*</span>
+              </label>
+              <input
+                type="text"
+                formControlName="mobile_no"
+                placeholder="+91 98000 12345"
+                [class.error]="isInvalid('mobile_no')"
+                class="form-control"
+              />
+              <div class="error-msg" *ngIf="isInvalid('mobile_no')">{{ getError('mobile_no') }}</div>
+            </div>
+
+            <!-- Email -->
+            <div class="form-group">
+              <label>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                E-Mail <span class="req">*</span>
+              </label>
+              <input
+                type="email"
+                formControlName="email"
+                placeholder="name@example.com"
+                [class.error]="isInvalid('email')"
+                class="form-control"
+              />
+              <div class="error-msg" *ngIf="isInvalid('email')">{{ getError('email') }}</div>
+            </div>
+
+            <!-- GST No -->
+            <div class="form-group">
+              <label>GST No</label>
+              <input type="text" formControlName="gst_no" placeholder="Enter GST No" class="form-control" />
+            </div>
+
+            <!-- Status -->
+            <div class="form-group">
+              <label>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                Status <span class="req">*</span>
+              </label>
+              <select formControlName="status" [class.error]="isInvalid('status')" class="form-control">
+                <option value="">Select Status</option>
+                <option value="Pending">Pending</option>
+                <option value="Approved">Approved</option>
+                <option value="Rejected">Rejected</option>
+              </select>
+              <div class="error-msg" *ngIf="isInvalid('status')">{{ getError('status') }}</div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- ── Bill to Address ──────────────────────────── -->
+        <section class="form-section">
+          <h4 class="section-title">Bill to Address</h4>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>City</label>
+              <input type="text" formControlName="city" placeholder="Enter City" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label>State</label>
+              <select formControlName="state" class="form-control">
+                <option value="">Select State</option>
+                <option>Tamil Nadu</option><option>Maharashtra</option>
+                <option>Karnataka</option><option>Delhi</option>
+                <option>Gujarat</option><option>Rajasthan</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Country</label>
+              <input type="text" formControlName="country" placeholder="Enter Country" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label>Postal Zip Code</label>
+              <input type="text" formControlName="postal_code" placeholder="Enter Zip Code" class="form-control" />
+            </div>
+            <div class="form-group full-width">
+              <label>Address</label>
+              <input type="text" formControlName="address" placeholder="Enter Address" class="form-control" />
+            </div>
+          </div>
+        </section>
+
+        <!-- ── Ship to Address ──────────────────────────── -->
+        <section class="form-section">
+          <h4 class="section-title">Ship to Address</h4>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>City</label>
+              <input type="text" formControlName="ship_city" placeholder="Enter City" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label>State</label>
+              <select formControlName="ship_state" class="form-control">
+                <option value="">Select State</option>
+                <option>Tamil Nadu</option><option>Maharashtra</option>
+                <option>Karnataka</option><option>Delhi</option>
+                <option>Gujarat</option><option>Rajasthan</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Country</label>
+              <input type="text" formControlName="ship_country" placeholder="Enter Country" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label>Postal Zip Code</label>
+              <input type="text" formControlName="ship_postal" placeholder="Enter Zip Code" class="form-control" />
+            </div>
+            <div class="form-group full-width">
+              <label>Address</label>
+              <input type="text" formControlName="ship_address" placeholder="Enter Address" class="form-control" />
+            </div>
+          </div>
+        </section>
+
+        <!-- ── Form Actions ─────────────────────────────── -->
+        <div class="form-actions">
+          <button type="button" class="btn-cancel" (click)="cancel()">Cancel</button>
+          <button type="submit" class="btn-save" [disabled]="saving">
+            <span class="btn-spinner" *ngIf="saving"></span>
+            {{ saving ? 'Saving...' : (isEditMode ? 'Update' : 'Save') }}
+          </button>
+        </div>
+
+      </form>
+    </div><!-- /form-panel -->
+  </div><!-- /form-layout -->
+
+</div><!-- /page-wrapper -->
