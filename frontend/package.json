@@ -1,14 +1,14 @@
 {
   "name": "bp-creation-frontend",
   "version": "1.0.0",
- "scripts": {
-  "start": "ng serve",
-  "build": "node ./node_modules/@angular/cli/bin/ng build",
-  "watch": "node ./node_modules/@angular/cli/bin/ng build --watch --configuration development"
-},
+  "scripts": {
+    "start": "node ./node_modules/@angular/cli/bin/ng serve",
+    "build": "node ./node_modules/@angular/cli/bin/ng build",
+    "watch": "node ./node_modules/@angular/cli/bin/ng build --watch --configuration development"
+  },
   "engines": {
-  "node": "18.x"
-},
+    "node": "18.x"
+  },
   "private": true,
   "dependencies": {
     "@angular/animations": "^18.0.0",
