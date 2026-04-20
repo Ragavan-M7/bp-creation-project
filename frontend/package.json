@@ -1,12 +1,11 @@
 {
   "name": "bp-creation-frontend",
   "version": "1.0.0",
-  "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development"
-  },
+ "scripts": {
+  "start": "ng serve",
+  "build": "node ./node_modules/@angular/cli/bin/ng build",
+  "watch": "node ./node_modules/@angular/cli/bin/ng build --watch --configuration development"
+},
   "engines": {
   "node": "18.x"
 },
